@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BUXML version="alpha" format="InfoBUXML" />
+<descriptif> Vue proposant la consultation XML pour une application tierce. Affichez le code source.</descriptif>
+<membre nom="Amanzou" prenom="Amine" >
+<promo diplome="DUT" annee="2013" />
+</membre>
+<emprunts>
+<livre id="3" titre="IUT Le guide" auteur="BarreLa" />
+<livre id="4" titre="IUT Le pas guide" auteur="Echec" />
+</emprunts>
+<reservations>
+<livre id="1" titre="La torture" auteur="Martin la passoire" />
+<livre id="2" titre="La soufrance" auteur="Vincent Tristesse" />
+<livre id="3" titre="IUT Le guide" auteur="BarreLa" />
+</reservations>
+</membre>
