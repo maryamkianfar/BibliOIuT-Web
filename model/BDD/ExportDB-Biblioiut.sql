@@ -3,16 +3,24 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Jeu 10 Janvier 2013 à 00:43
+-- Généré le: Ven 11 Janvier 2013 à 22:50
 -- Version du serveur: 5.5.28
 -- Version de PHP: 5.4.7
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
 -- Base de données: `biblioiut`
 --
+CREATE DATABASE `biblioiut` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `biblioiut`;
 
 -- --------------------------------------------------------
 
@@ -27,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `Emprunt` (
   `fk_idMembre` int(11) DEFAULT NULL,
   PRIMARY KEY (`idEmprunt`),
   KEY `fk_idMembre` (`fk_idMembre`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `Emprunt`
@@ -35,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `Emprunt` (
 
 INSERT INTO `Emprunt` (`idEmprunt`, `dateDebutEmprunt`, `dateFinEmprunt`, `fk_idMembre`) VALUES
 (1, '2013-01-08', '2013-01-24', 2),
-(2, '2013-01-07', '2013-01-20', 3);
+(2, '2013-01-07', '2013-01-20', 3),
+(3, '2013-01-08', '2013-01-23', 1);
 
 -- --------------------------------------------------------
 
@@ -84,8 +93,29 @@ CREATE TABLE IF NOT EXISTS `Livre` (
 INSERT INTO `Livre` (`idLivre`, `titreLivre`, `auteurLivre`, `couvertureLivre`, `fk_idEmprunt`) VALUES
 (1, 'La torture', 'Martin la passoire', NULL, 1),
 (2, 'La soufrance', 'Vincent Tristesse', NULL, 2),
-(3, 'IUT Le guide', 'BarreLa', NULL, NULL),
-(4, 'IUT Le pas guide', 'Echec', NULL, NULL);
+(3, 'IUT Le guide', 'BarreLa', NULL, 3),
+(4, 'IUT Le pas guide', 'Echec', NULL, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `LivreCSV`
+--
+
+CREATE TABLE IF NOT EXISTS `LivreCSV` (
+  `idLivreCSV` int(11) NOT NULL,
+  `titreLivreCSV` varchar(255) NOT NULL,
+  `auteurLivreCSV` varchar(255) NOT NULL,
+  `tagLivreCSV` text NOT NULL
+) ENGINE=CSV DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `LivreCSV`
+--
+
+INSERT INTO `LivreCSV` (`idLivreCSV`, `titreLivreCSV`, `auteurLivreCSV`, `tagLivreCSV`) VALUES
+(1, 'SombreFin', 'Victor', 'drame horreur massacre'),
+(2, '42', 'Life', 'SCFI');
 
 -- --------------------------------------------------------
 
@@ -102,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `Membre` (
   `fk_idEtudiant` int(11) DEFAULT NULL,
   PRIMARY KEY (`idMembre`),
   KEY `fk_idEtudiant` (`fk_idEtudiant`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `Membre`
@@ -111,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `Membre` (
 INSERT INTO `Membre` (`idMembre`, `nomMembre`, `prenomMembre`, `loginMembre`, `mdpMembre`, `fk_idEtudiant`) VALUES
 (1, 'Amanzou', 'Amine', 'Amanzou', '*F70B87A68255AD7682EAA519AACDE750D9F02304', 1),
 (2, 'Duchateau', 'Bryan', 'Duchatea', '*9DE1290C47E1BF1ACA21D9982CC0F6DF27141941', 2),
-(3, 'Jeboss', 'ici', 'Jeboss', '*A83C7B852CB130BA68D44FF066875D9F6959D761', NULL);
+(3, 'Jeboss', 'ici', 'Personnel', '*87BADFAF80C4D18D7D876A48AB468995F421F117', NULL);
 
 -- --------------------------------------------------------
 
@@ -135,7 +165,9 @@ CREATE TABLE IF NOT EXISTS `Reservation` (
 INSERT INTO `Reservation` (`fk_idLivre`, `fk_idMembre`, `dateReservation`) VALUES
 (1, 1, '0000-00-00'),
 (1, 2, '2013-01-19'),
-(1, 3, '2013-01-17');
+(1, 3, '2013-01-17'),
+(2, 1, '2013-01-02'),
+(3, 1, '2013-01-02');
 
 -- --------------------------------------------------------
 
@@ -149,7 +181,18 @@ CREATE TABLE IF NOT EXISTS `Tag` (
   `fk_idLivre` int(11) DEFAULT NULL,
   PRIMARY KEY (`idTag`),
   KEY `fk_idLivre` (`fk_idLivre`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Contenu de la table `Tag`
+--
+
+INSERT INTO `Tag` (`idTag`, `motTag`, `fk_idLivre`) VALUES
+(1, 'Drame', 1),
+(2, 'Comedie', 1),
+(3, 'Romance', 1),
+(4, 'Psy', 1),
+(5, 'Lalane', 2);
 
 --
 -- Contraintes pour les tables exportées
@@ -184,4 +227,8 @@ ALTER TABLE `Reservation`
 -- Contraintes pour la table `Tag`
 --
 ALTER TABLE `Tag`
-  ADD CONSTRAINT `tags_ibfk_1` FOREIGN KEY (`fk_idLivre`) REFERENCES `Livre` (`idLivre`);
+  ADD CONSTRAINT `tag_ibfk_1` FOREIGN KEY (`fk_idLivre`) REFERENCES `Livre` (`idLivre`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

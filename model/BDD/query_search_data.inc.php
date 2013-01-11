@@ -19,4 +19,20 @@ $query_xml_gen  = '	SELECT	*
 					FROM Membre, Etudiant
 					WHERE `Membre`.`fk_idEtudiant`=`Etudiant`.`idEtudiant`
 					AND	`Membre`.`fk_idEtudiant` = :fkidEtudiant ;';
+
+$query_search_Livre = "	SELECT `titreLivre` , `auteurLivre` , `motTag`, `fk_idEmprunt`
+						FROM Livre, Tag
+						WHERE `Livre`.`idLivre` = `Tag`.`fk_idLivre`
+						AND `Livre`.`titreLivre` LIKE :string
+						OR `Livre`.`auteurLivre` LIKE :string
+						OR `Tag`.`motTag` LIKE :string
+						GROUP BY `titreLivre`;";
+
+$query_search_Etudiant = "	SELECT `nomMembre` , `prenomMembre` , count(`Emprunt`.`fk_idMembre`), count(`Reservation`.`fk_idMembre`)
+							FROM Membre, Reservation, Emprunt
+							WHERE `Membre`.`idMembre` = `Reservation`.`fk_idMembre`
+							AND `Membre`.`idMembre` = `Emprunt`.`fk_idMembre`
+							AND `Membre`.`nomMembre` LIKE 'Amanzou'
+							OR `Membre`.`prenomMembre` LIKE 'Amanzou';";
+							
 ?>

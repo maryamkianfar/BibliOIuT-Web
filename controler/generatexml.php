@@ -1,15 +1,6 @@
 <?php
 	include(getcwd().'/model/BDD/query_search_data.inc.php');
-	include_once(getcwd().'/config/connectionsToDatabase.php');
-	
-	function __autoload($name)
-	{
-		if (file_exists('model/_class/'.$name.'.class.php'))
-		{
-			require_once('model/_class/'.$name.'.class.php');
-		}
-	}
-	
+		
 	function download($fileName) {
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: attachment; filename='.basename($fileName) );
@@ -25,11 +16,11 @@
     
     $idEtudiant = $_GET['idEtu'];
     
+    $xml = $xml . '<membres>' . "\n";
     $Membre = new Membre($dbh,'','',$idEtudiant);
     
     $xml = $xml . '<membre nom="' . $Membre->getNom() . '" prenom="' . $Membre->getPrenom() . '" >' . "\n"
     			. '<promo diplome="' . $Membre->getDiplome() . '" annee="' . $Membre->getAnnee() . '" />' . "\n";
-    
     $xml = $xml . '</membre>' . "\n";
     
     /* Requetes emprunts */
@@ -59,11 +50,13 @@
 	}
 	$xml = $xml . '</reservations>' . "\n";
 	$xml = $xml . '</membre>' . "\n";
+	$xml = $xml . '</membres>' . "\n";
 	
     /* envoie du source XML */
+    
     print($xml);
 
-    $filename = '/view/generated/'.$Membre->_idMembre.$Membre->_nomMembre.'.xml';
+    /*$filename = '/view/generated/'.$Membre->_idMembre.$Membre->_nomMembre.'.xml';
     $fp = fopen(getcwd().$filename, 'w+');
     fputs($fp, $xml);
     fclose($fp);
@@ -71,4 +64,5 @@
     echo 'Export XML effectue !<br><a href=".'.$filename.'">Voir le fichier ici</a>';
     
     //download(getcwd().$filename);
+    */
 ?>
