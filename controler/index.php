@@ -1,63 +1,63 @@
 <?php
 	//Tableau repertoriant les pages
-	$tableau = array('Acceuil.html', 'RechercheEmprunt.html','RechercheLivre.html','Contact.html','Deconnexion.html');
-		//print_r ($tableau);	
+	$tablink = array('Acceuil.html', 'RechercheEmprunt.html','RechercheLivre.html','Contact.html','Deconnexion.html');
+	$tableau = array('Acceuil', 'Recherche Emprunt','Recherche Livre','Contact','Deconnexion');
 	
-	
-	//Recuperation du get
+	//Recuperation du GET
 	if (!empty($_GET['page']))
+	{
 		$titre = $_GET['page'];
+		
+		for($i=0;$i<5;$i++)
+			if(!strcmp($tablink[$i], $titre))
+			{
+				$titre = $tableau[$i];
+				$i = 6;
+			}
+		if($i == 5)
+			$titre = '404 NOT FOUND';
+	}
+	else if (!empty($_GET['idEt']))
+		$titre = 'Generation XML';
 	else
 		$titre = '404 NOT FOUND';
 	
-//	echo $titre;
-	for($i=0;$i<5;$i++)
-	{
-		//echo $tableau[$i];
-		if(strcmp($tableau[$i], $titre)){
-			//$i==6;
-			}
-		else
-			$titre = '404 NOT FOUND';
-	}
-//	echo $i;
 	
- include(getcwd().'/view/head.php');
+	if (empty($_GET['idEt']))
+			include(getcwd().'/view/head.php');
  
-// 	si 404 NOT FOUND
-		//Notfound.html
- 
+	if ($titre == '404 NOT FOUND'){
+		include(getcwd().'/view/header.html');
+		include(getcwd().'/view/notfound.html');
+	}
+	
+	if ($titre == 'Generation XML'){
+		include(getcwd().'/controler/generatexml.php');
+	}
+	
 	if ($titre == 'Accueil'){
 		include(getcwd().'/view/header.html');
-		include(getcwd().'/view/Connexion.html');
-		include(getcwd().'/view/footer.html');
+		include(getcwd().'/view/connexion.html');
 	}
 
 
-	if ($titre == 'RechercheEmprunt'){
+	if ($titre == 'Recherche Emprunt'){
 		include(getcwd().'/view/headerperso.html');
 		include(getcwd().'/view/rechercheemprunt.html');
-		include(getcwd().'/view/footer.html');
 	}
 
 	
-	if ($titre == 'RechercheLivrePerso'){
-		include(getcwd().'/view/headerperso.html');
+	if ($titre == 'Recherche Livre'){
+		include(getcwd().'/view/headerperso.html'); // or ETU en fx connection
 		include(getcwd().'/view/recherchelivre.html');
-		include(getcwd().'/view/footer.html');
 	}
 
-  
-	if ($titre == 'RechercheLivreEtu'){
-		include(getcwd().'/view/headeretu.html');
-		include(getcwd().'/view/recherchelivre.html');
-		include(getcwd().'/view/footer.html');
-	}
   
 	if ($titre == 'Contact'){
 		include(getcwd().'/view/headeretu.html');
 		include(getcwd().'/view/contact.html');
-		include(getcwd().'/view/footer.html');
 	}
- 
+
+	if (empty($_GET['idEt']))
+		include(getcwd().'/view/footer.html');
  ?>
