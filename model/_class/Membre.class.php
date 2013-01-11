@@ -13,16 +13,43 @@ class Membre
 
     /*Constructeur*/
     public
-        function __construct ($dbh,$login,$mdp)
+        function __construct ($dbh,$login,$mdp,$xmlgenid)
         {
-	        $this->_loginMembre = $login;
-            $this->_mdpMembre = $mdp;
-
-            /* On chiffre le mot de passe */
-            //$this->_mdpMembre = md5($mdp);
-
-            return $this->connexion($dbh);
+        	/* Determine si l'on instencie pour se loger ou pour exporter en xml*/
+	        if ($xmlgenid == 0)
+	        {
+	        	$this->_loginMembre = $login;
+	        	$this->_mdpMembre = $mdp;
+	        	
+	        	/* On chiffre le mot de passe */
+	        	//$this->_mdpMembre = md5($mdp);
+	        	
+	        	$this->connexion($dbh);
+	        }
+	        else
+	        {
+		    	include(getcwd().'/model/BDD/query_search_data.inc.php');
+		    	include_once(getcwd().'/config/connectionsToDatabase.php');
+		    	
+		    	/* Requête */
+		    	$answer=$dbh->prepare($query_xml_gen);
+		    	
+		    	$answer->bindValue(':fkidEtudiant',$xmlgenid,PDO::PARAM_INT);
+		    	
+		    	$answer->execute();
+		    	
+		    	/* Recuperation dans un tableau */
+		    	$donnees = $answer->fetch();
+		    	
+		    	/* Remplissage des classes */
+		    	$this->_idMembre = $donnees['idMembre'];
+		    	$this->_nomMembre = $donnees['nomMembre'];
+		    	$this->_prenomMembre = $donnees['prenomMembre'];
+		    	
+		    	$this->etudiant = new Etudiant($dbh,$donnees['fk_idEtudiant']);
+	        }
         }
+
 
 	/* return :
 	 * 0 = Connexion effectué
@@ -66,6 +93,30 @@ class Membre
 	            return -1;
             }
         }
+    
+    /* Accesseur */
+    public
+    	function getNom()
+    	{
+	    	return $this->_nomMembre;
+    	}
+    public
+    	function getPrenom()
+    	{
+	    	return $this->_prenomMembre;
+    	} 
+    public
+    	function getDiplome()
+    	{
+	    	return $this->etudiant->_diplomeEtudiant;
+    	}
+    public
+    	function getAnnee()
+    	{
+	    	return $this->etudiant->_anneeEtudiant;
+    	}
+
+
 }
 
 ?>
