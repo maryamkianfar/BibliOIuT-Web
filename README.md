@@ -11,17 +11,20 @@ Un environnement de développement : phpmyadmin, mysql
 ### Download and install the package
 * Download zip file from gitHub [here](https://github.com/amineamanzou/BibliOIuT-Web)
 * Unzip it in your web folder.
-* Create a Database : biblioiut
-* Importe the file in : /model/BDD/ExportDB_Biblioiut.sql
+* Créer la base de donnée : biblioiut
+* Importer le fichier : /model/BDD/ExportDB_Biblioiut.sql pour génerer la base de donnée
 * Ne pas oublier de modifier config_pdo.php avec vos logins localhost.
 
+### Modifiez les permissions pour autoriser l'ecriture de fichier xml
 ```bash
-/config/config_pdo.php
+cd BibliOIuT-Web
+chmod -R 700 ./
 [...]
 ```
 
 ## Ready !
 Vous pouvez maintenant tester le site.
+Toute remarque, amélioration et tout commit est le bienvenu.
 
 ### Example
 ```bash
