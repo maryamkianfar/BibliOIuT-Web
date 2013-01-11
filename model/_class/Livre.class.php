@@ -15,7 +15,7 @@ class Livre
 	        include(getcwd().'/model/BDD/query_construct_class.inc.php');
 	        include_once(getcwd().'/config/connectionsToDatabase.php');
             
-            /* Recherche du profil */
+            /* Recherche du Livre */
             $answer = $bdd->prepare($query_get_Livre);
 			$answer->bindValue('idLivre',$idLivre,PDO::PARAM_INT);
 			$answer->execute();

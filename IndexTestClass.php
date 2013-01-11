@@ -10,7 +10,7 @@ function __autoload($name)
 	}
 }
 
-$Membre = new Membre ($dbh,'Duchatea','Duchatea');
+$Membre = new Membre ($dbh,'Duchatea','Duchatea',0);
 print_r($Membre, false);
 echo "<pre>\n</pre>";
 
