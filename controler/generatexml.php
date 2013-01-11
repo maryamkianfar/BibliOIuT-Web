@@ -70,5 +70,5 @@
 
     echo 'Export XML effectue !<br><a href=".'.$filename.'">Voir le fichier ici</a>';
     
-    download(getcwd().$filename);
+    //download(getcwd().$filename);
 ?>

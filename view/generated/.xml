@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BUXML version="alpha" format="InfoBUXML" />
+<descriptif> Vue proposant la consultation XML pour une application tierce. Affichez le code source.</descriptif>
+<membre nom="" prenom="" >
+<promo diplome="" annee="" />
+</membre>
+<emprunts>
+</emprunts>
+<reservations>
+</reservations>
+</membre>

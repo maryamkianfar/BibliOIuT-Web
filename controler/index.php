@@ -20,7 +20,7 @@
 	else if (!empty($_GET['idEt']))
 		$titre = 'Generation XML';
 	else
-		$titre = '404 NOT FOUND';
+		$titre = 'Acceuil';
 	
 	
 	if (empty($_GET['idEt']))
@@ -35,7 +35,7 @@
 		include(getcwd().'/controler/generatexml.php');
 	}
 	
-	if ($titre == 'Accueil'){
+	if ($titre == 'Acceuil'){
 		include(getcwd().'/view/header.html');
 		include(getcwd().'/view/connexion.html');
 	}
