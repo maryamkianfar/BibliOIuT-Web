@@ -19,6 +19,7 @@ Un environnement de développement : phpmyadmin, mysql
 ```bash
 cd BibliOIuT-Web
 chmod -R 700 ./
+
 [...]
 ```
 
